@@ -2,42 +2,70 @@ import java.util.Random;
 
 public class Quick{
   public static void main(String[] args) {
-    int[] data = {3,1,5,2,4,10,8};
-    partition(data, 0, 0);
+    int[] data = {0, 999,999,999,999,1,2,3,4};
+    partition(data, 0, data.length - 1);
   }
 
-  public static int partition ( int [] data, int start, int end){
+  private static void swap(int[] arr, int x, int y) {
+    int temp = arr[x];
+    arr[x] = arr[y];
+    arr[y] = temp;
+  }
+
+  public static int partition ( int[] data, int start, int end){
     Random rand = new Random();
 
     int pivot = rand.nextInt(data.length);
+    System.out.print("IDX :" + pivot + "\n");
 
-    System.out.print(pivot);
-    System.out.println();
+    int pivotData = data[pivot];
 
-    int temp = data[pivot];
 
-    data[pivot] = data[0];
+    System.out.print("PIVOTDATA: " + pivotData);
 
-    data[0] = temp;
+    swap(data, start, pivot);
+    System.out.println("FIRST: " + toString(data));
 
-    while (start != end){
-      if (data[start] >= data[pivot]){ // If it's greater, put it at the end
-        int temp1 = data[end];
-        data[end] = data[start];
-        data[start] = temp1;
+    System.out.print("PIVOT: " + data[pivot] + "\n");
+
+    start++;
+
+
+
+    while (end != start){
+      System.out.print(toString(data) + "\n");
+      if (data[start] > pivotData){ // If it's greater, put it at the end
+      // System.out.print("SWAP TO END");
+      // System.out.println();
+      //
+      //   System.out.print("START: "+ data[start]);
+      //   System.out.println();
+      //
+      //   System.out.print("END: "+ data[end]);
+      //   System.out.println();
+
+        swap(data, start, end);
+        end--;
+      }
+      else{
         start++;
       }
-      if (data[start] < data[pivot]){
-        start++;
-      }
+      // else if (data[start] == pivotData){
+      //   start++;
+      // }
     }
 
-    int temp3 = data[0];
-    data[0] = data[pivot];
-    data[pivot] = temp3;
-    System.out.print(toString(data));
+    if (data[start] < pivotData){
+      swap(data, start, 0); // At the end, if num at 0 is less than the pivot at 0, switch
+      return start;
+    }
+    else{
+      swap(data, start - 1, 0); // If data[start ] > pivot, that means the num right before it is less than pivot
+      return start - 1;
+    }
 
-    return 1;
+    // System.out.print(toString(data));
+    // return pivot;
   }
 
   public static String toString(int[] data){
@@ -48,4 +76,6 @@ public class Quick{
     }
     return output;
   }
+
+
 }
