@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Quick{
   public static void main(String[] args) {
-    int[] data = {0, 999,999,999,999,1,2,3,4};
+    int[] data = {999,999,999,4,1,0,3,2,999,999,999};
     partition(data, 0, data.length - 1);
   }
 
@@ -16,6 +16,11 @@ public class Quick{
 
 	    int pivot = (int) (Math.random() * (data.length - 1));
 	    int pivotData = data[pivot];
+
+      System.out.print(pivot);
+      System.out.println();
+      System.out.print(pivotData);
+      System.out.println();
 
 	    swap(data, start, pivot);
 	    start++;
@@ -42,6 +47,10 @@ public class Quick{
 	      return start - 1;
 	    }
 	  }
+
+  public static int quickselect(int[] data, int k){
+    return -1;
+  }
 
   public static String toString(int[] data){
     String output = "";
