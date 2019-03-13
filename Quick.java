@@ -4,6 +4,7 @@ public class Quick{
   public static void main(String[] args) {
     int[] data = {999,999,999,4,1,0,3,2,999,999,999};
     partition(data, 0, data.length - 1);
+    toString(data);
   }
 
   private static void swap(int[] arr, int x, int y) {
@@ -15,20 +16,19 @@ public class Quick{
   public static int partition ( int[] data, int start, int end){
 
 	    int pivot = (int) (Math.random() * (data.length - 1));
-	    int pivotData = data[pivot];
+      int pivotData = data[pivot];
+      // int pivot = new Random().nextInt(end - start + 1);
 
-      System.out.print(pivot);
+      System.out.print("PIVOT : " + pivot);
       System.out.println();
-      System.out.print(pivotData);
+      System.out.print("PIVOTDATA : " + pivotData);
       System.out.println();
 
 	    swap(data, start, pivot);
 	    start++;
 
-
-
 	    while (end != start){
-	      if (data[start] > pivotData){ // If it's greater, put it at the end
+	      if (data[start] >= pivotData){ // If it's greater, put it at the end
 	        swap(data, start, end);
 	        end--;
 	      }
@@ -39,7 +39,8 @@ public class Quick{
 
 	    if (data[start] < pivotData){
 	      swap(data, start, 0); // At the end, if num at 0 is less than the pivot at 0, switch
-	      return start;
+        System.out.print(toString(data));
+        return start;
 	    }
 	    else{
 	      swap(data, start - 1, 0); // If data[start ] > pivot, that means the num right before it is less than pivot
