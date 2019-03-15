@@ -93,4 +93,28 @@ public class Quick{
     }
     return output;
   }
+
+  private int[] partitionDutch(int[] data, int start, int end){
+
+    int pivot = getMedian(data, start, end);
+
+    swap(data, start, pivot);  // moves pivot to beginning and adjusts pivot;
+    pivot = start;
+
+    int lt = 0;
+    int gt = data.length - 1;
+
+    while (end > start){
+      if (data[start] > pivotData){
+        swap(data, start, end);
+        end--;
+      }
+      if (data[start] < pivotData){
+        start++;
+      }
+      if (data[start] == pivotData){
+
+      }
+    }
+  }
 }
