@@ -11,38 +11,42 @@ public class Quick{
     // // System.out.print(toString(data));
     // System.out.print(toString(data));
     public static void main(String[]args){
-    System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
-    int[]MAX_LIST = {1000000000,500,10};
-    for(int MAX : MAX_LIST){
-      for(int size = 31250; size < 2000001; size*=2){
-        long qtime=0;
-        long btime=0;
-        //average of 5 sorts.
-        for(int trial = 0 ; trial <=5; trial++){
-          int []data1 = new int[size];
-          int []data2 = new int[size];
-          for(int i = 0; i < data1.length; i++){
-            data1[i] = (int)(Math.random()*MAX);
-            data2[i] = data1[i];
-          }
-          long t1,t2;
-          t1 = System.currentTimeMillis();
-          Quick.quicksort(data2);
-          t2 = System.currentTimeMillis();
-          qtime += t2 - t1;
-          t1 = System.currentTimeMillis();
-          Arrays.sort(data1);
-          t2 = System.currentTimeMillis();
-          btime+= t2 - t1;
-          if(!Arrays.equals(data1,data2)){
-            System.out.println("FAIL TO SORT!");
-            System.exit(0);
-          }
-        }
-        System.out.println(size +"\t\t"+MAX+"\t"+1.0*qtime/btime);
-      }
-      System.out.println();
-    }
+      int[] data = {999,999,999,4,1,0,3,2,999,999,999};
+      quicksort(data);
+      System.out.print(toString(data));
+    //
+    // System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
+    // int[]MAX_LIST = {1000000000,500,10};
+    // for(int MAX : MAX_LIST){
+    //   for(int size = 31250; size < 2000001; size*=2){
+    //     long qtime=0;
+    //     long btime=0;
+    //     //average of 5 sorts.
+    //     for(int trial = 0 ; trial <=5; trial++){
+    //       int []data1 = new int[size];
+    //       int []data2 = new int[size];
+    //       for(int i = 0; i < data1.length; i++){
+    //         data1[i] = (int)(Math.random()*MAX);
+    //         data2[i] = data1[i];
+    //       }
+    //       long t1,t2;
+    //       t1 = System.currentTimeMillis();
+    //       Quick.quicksort(data2);
+    //       t2 = System.currentTimeMillis();
+    //       qtime += t2 - t1;
+    //       t1 = System.currentTimeMillis();
+    //       Arrays.sort(data1);
+    //       t2 = System.currentTimeMillis();
+    //       btime+= t2 - t1;
+    //       if(!Arrays.equals(data1,data2)){
+    //         System.out.println("FAIL TO SORT!");
+    //         System.exit(0);
+    //       }
+    //     }
+    //     System.out.println(size +"\t\t"+MAX+"\t"+1.0*qtime/btime);
+    //   }
+    //   System.out.println();
+    // }
   }
 
   // }
@@ -72,24 +76,6 @@ public class Quick{
 
     return median;
   }
-  //
-  // public static int partition(int[] data, int start, int end){
-  //     // int pivot = getMedian(data, start, end);
-  //     int pivot = data[data.length / 2];
-  //     int y = start - 1;
-  //
-  //     for (int x = start; x < end ; x++ ) {
-  //       if (data[x] <= pivot){
-  //         y++;
-  //         swap(data, x, y);
-  //       }
-  //     }
-  //
-  //     swap(data, y+1, end);
-  //
-  //     return y+1;
-	//   }
-
 
  public static int partition (int [] data, int start, int end){
     if (start == end) return start;
@@ -101,7 +87,8 @@ public class Quick{
     pivot = start;
 
     while (end > start) {
-      if (data[start] > pivotData) { // if value is greater than pivot value, move to the end
+      if ((data[start] > pivotData) || (Math.random() >= .50 && data[start] == pivotData)) { // if value is greater than pivot value, move to the end
+        System.out.println(toString(data));
           swap(data, start, end);
           end--;
         }
@@ -118,11 +105,18 @@ public class Quick{
       }
   }
 
-  // public static int quickselect(int[] data, int k){
-  //   partition(data, 0, 0);
-  //
-  //   for (int x = 0; x < data.l)
-  // }
+  public static int quickselect(int[] data, int k){
+    int start = 0;
+    int end = data.length - 1;
+    int pivot = partition(data, start, end); // partition it
+
+    while (k!= pivot){
+      pivot = partition(data, start, end); // keep partitioning it until it has what you are looking for.
+      if (k < pivot) end = pivot - 1;
+      else start = pivot + 1;
+    }
+    return data[k];
+  }
 
   public static void quicksort(int[] data){
     quickSortH(data, 0, data.length - 1);
@@ -135,12 +129,6 @@ public class Quick{
     quickSortH(data, start, pivot - 1);
     quickSortH(data, pivot + 1, end);
   }
-
-
-    /* The main function that implements QuickSort()
-      arr[] --> Array to be sorted,
-      low  --> Starting index,
-      high  --> Ending index */
 
   public static String toString(int[] data){
     String output = "";
