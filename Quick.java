@@ -2,6 +2,11 @@ import java.util.Random;
 import java.util.Arrays;
 
 public class Quick{
+  public static void main(String[] args) {
+    int[] data = {1, 5,2 ,3,6, 9, 1, 5, 2, 3, 6 ,9};
+    partitionDutch(data, 0, data.length - 1);
+    System.out.print(toString(data));
+  }
   private static void swap(int[] arr, int x, int y) {
     // swaps index x with index y
     int temp = arr[x];
@@ -94,27 +99,19 @@ public class Quick{
     return output;
   }
 
-  private int[] partitionDutch(int[] data, int start, int end){
+  private static int[] partitionDutch(int[] data, int lo, int hi){
 
-    int pivot = getMedian(data, start, end);
+    int pivot = getMedian(data, lo, hi);
+    int pivotData = data[pivot];
 
-    swap(data, start, pivot);  // moves pivot to beginning and adjusts pivot;
-    pivot = start;
+    swap(data, lo, pivot);
 
-    int lt = 0;
-    int gt = data.length - 1;
+    int lt = lo;
+    int x = 0;
+    int gt = hi;
 
-    while (end > start){
-      if (data[start] > pivotData){
-        swap(data, start, end);
-        end--;
-      }
-      if (data[start] < pivotData){
-        start++;
-      }
-      if (data[start] == pivotData){
 
-      }
-    }
+    int[] arr = {lt, gt};
+    return arr;
   }
 }
