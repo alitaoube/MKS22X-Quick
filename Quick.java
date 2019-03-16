@@ -2,11 +2,6 @@ import java.util.Random;
 import java.util.Arrays;
 
 public class Quick{
-  public static void main(String[] args) {
-    int[] data = {1, 5,2 ,3,6, 9, 1, 5, 2, 3, 6 ,9};
-    partitionDutch(data, 0, data.length - 1);
-    System.out.print(toString(data));
-  }
   private static void swap(int[] arr, int x, int y) {
     // swaps index x with index y
     int temp = arr[x];
@@ -83,11 +78,11 @@ public class Quick{
 
   private static void quickSortH(int[] data, int start, int end){
     if (start >= end) return;
-    int pivot = partition(data, start, end);
+    int[] vals = partitionDutch(data, start, end);
 
     // do not use the pivot; use values around it
-    quickSortH(data, start, pivot - 1);
-    quickSortH(data, pivot + 1, end);
+    quickSortH(data, start, vals[0] - 1);
+    quickSortH(data, vals[1] + 1, end);
   }
 
   public static String toString(int[] data){
@@ -99,33 +94,31 @@ public class Quick{
     return output;
   }
 
-  private static int[] partitionDutch(int[] data, int lo, int hi){
 
-    int pivot = getMedian(data, lo, hi);
-    int pivotData = data[pivot];
+    private static int[] partitionDutch(int[] data, int lo, int hi){
+      if (lo == hi) return new int[] {lo, lo + 1};
 
-    swap(data, lo, pivot);
+     int pivotIndex = getMedian(data, lo, hi);
+     int pivotData = data[pivotIndex];
+     swap(data, lo, pivotIndex);
 
-    int lt = lo;
-    int idx = 0;
-    int gt = hi;
+     int lt = lo, idx = lo, gt = hi;
 
-    while (idx <= gt){
-      if (data[idx] > pivot){
-        swap(data, idx, gt); // basically the same process as before; greater, put at end.
-        gt--;
-      }
-      if (data[idx] < pivot){ // if its less than, you put it at the beginning, but increment lt to reflect that equal ones are pushed up one
-        swap(data, idx, lt);
-        lt++;
-        idx++;
-      }
-      else{
-        idx++; // last scenario is that they're equal, in which case you can just skip it.
-      }
+
+     while (idx <= gt){
+       if (data[idx] > pivotData){
+         swap(data, idx, gt); // basically the same process as before; greater, put at end.
+         gt--;
+       }
+       else if (data[idx] < pivotData){ // if its less than, you put it at the beginning, but increment lt to reflect that equal ones are pushed up one
+         swap(data, idx, lt);
+         lt++;
+         idx++;
+       }
+       else{
+         idx++; // last scenario is that they're equal, in which case you can just skip it.
+       }
+     }
+     return new int[] {lt, gt};
     }
-
-    int[] arr = {lt, gt};
-    return arr;
   }
-}
