@@ -107,9 +107,21 @@ public class Quick{
     swap(data, lo, pivot);
 
     int lt = lo;
-    int x = 0;
+    int idx = 0;
     int gt = hi;
 
+    while (idx <= gt){
+      if (data[idx] > pivot){
+        swap(data, idx, gt); // basically the same process as before; greater, put at end.
+      }
+      if (data[idx] < pivot){
+        swap(data, idx, lt);
+        idx++;
+      }
+      else{
+        idx++; // last scenario is that they're equal, in which case you can just skip it.
+      }
+    }
 
     int[] arr = {lt, gt};
     return arr;
