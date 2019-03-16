@@ -113,9 +113,11 @@ public class Quick{
     while (idx <= gt){
       if (data[idx] > pivot){
         swap(data, idx, gt); // basically the same process as before; greater, put at end.
+        gt--;
       }
-      if (data[idx] < pivot){
+      if (data[idx] < pivot){ // if its less than, you put it at the beginning, but increment lt to reflect that equal ones are pushed up one
         swap(data, idx, lt);
+        lt++;
         idx++;
       }
       else{
